@@ -3,32 +3,32 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/blog/the-list/firstpost/</loc>
+		<loc>https://example.com/drert.github.io/blog/the-list/firstpost/</loc>
 		<lastmod>2025-05-14</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/about/</loc>
+		<loc>https://example.com/drert.github.io/about/</loc>
 		<lastmod>2025-05-18</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/blog/</loc>
+		<loc>https://example.com/drert.github.io/blog/</loc>
 		<lastmod>2025-05-18</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/</loc>
+		<loc>https://example.com/drert.github.io/</loc>
 		<lastmod>2025-05-18</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/sitemap.xml</loc>
+		<loc>https://example.com/drert.github.io/sitemap.xml</loc>
 		<lastmod>2025-05-18</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://example.com/eleventy-base-blog/tags/</loc>
+		<loc>https://example.com/drert.github.io/tags/</loc>
 		<lastmod>2025-05-18</lastmod>
 	</url>
 </urlset>
