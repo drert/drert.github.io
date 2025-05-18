@@ -1,26 +1,26 @@
 ---
-title: Intro // Post 0 // The Bulletin
+title: Post 0 // The Bulletin
 description: Plans, a starting point, etc. 
 date: 2025-05-14
-tags: [Fluff, Pinned]
+tags: [Info, Pinned]
 ---
 
 This blog is starting as a somewhat informal portfolio for the purpose of finding a job. While this is an important step in my career, I hope I can slowly evolve it into something more. This post is going to be used as a bulletin board, almost a to-do list, evolving as life goes on.
 
-At this moment there is a lot to say and reminisce on, so I will be making several "catch up" posts describing previous projects. I'm going to tag these as "<a href="/tags/recall">Recall</a>" posts. Moving forwards I hope to instead make weekly update posts and project-specific posts, potentially in a thread style as they evolve. 
+At this moment there is a lot to say and reminisce on, so I will be making several "catch up" posts describing previous projects. These will be posts labelled with the "<a href="/tags/recall">Recall</a>" tag. Moving forwards I hope to instead make weekly update posts and project-specific posts, potentially in a thread style as they progress. 
 
-The sections below will establish the format of this
+This top message may change or be removed entirely, but the sections below will remain as dynamic but focused lists. 
 
 
 
 <br>
 
 ## Short-term Goals
-When looking big picture, some of these are quite loaded goals. I have realized that I get overwhelmed when I create big plans, so I'm starting one step at a time. These may seem shallow at the moment, but t
+These may seem shallow, but I find it is easier to stay whelmed when starting small. In this transitionary period I'm going to maintain a small list here to give myself focused hope. 
 * Professional -- Find a job.
-* Professional/Hobby -- Establish/Start at least 1 big project.
+* Professional/Hobby -- Establish/Start at least 1 big personal project.
 * Fitness -- Set and follow a schedule for 1 month.
-* Personal -- Take a vacation, its been 7 years. 
+* Personal -- Plan a vacation. 
 
 <br> 
 
@@ -42,17 +42,18 @@ Currently, my goal is to establish and work on projects myself. In the future, I
 <br>
 
 ## Recently Completed
-If you can see this, I launched the website! It's a big step for me as I spent the majority of my final semester with no time on my hands, stressing about how I needed to get this done at some point. With a solid plan on how to move forward I'm re-establishing my confidence. 
+* Website Launch
+    * If you can see this, I launched the website! It's a big step for me as I spent the majority of my final semester with no time on my hands, stressing about how I needed to get this done at some point. With a solid plan on how to move forward I'm re-establishing my confidence. 
 
 In the future this section will be where quick notes/links will be for recently completed projects.
 
 <br>
 
 ## Rules
-To reassure those who may be here out of genuine interest for me, not just to skim or seek specific information, I want to first reassure you by establishing some ground rules for myself.
+To reassure those who may be here out of genuine interest for me, not just to skim or seek specific information, I want to reassure you by establishing some ground rules for myself.
 * No Politics
     * I have no interest in making this a political platform, and will for the forseable future avoid any politics, especially American, far from here.
 * No Therapy
     * Things may get personal, but I will be omitting long emotional ramblings in my posts.
 * No Memes
-    * I'd like to keep "funnies" out of the way, and keep this blog productivity-focused. 
+    * I'd like to keep "funnies" out of the way, and keep this blog focused. 
