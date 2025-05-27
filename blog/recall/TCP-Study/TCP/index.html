@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Alex&#39;s Blogfolio</title>
-		<meta name="description" content="Recent grad sharing projects, hobbies, and experiences.">
+		<title>Recall -- TCP Improvement</title>
+		<meta name="description" content="A showcase of work describing possible improvements to TCP bandwidth claiming.">
 		<link rel="alternate" href="/drert.github.io/feed/feed.xml" type="application/atom+xml" title="Alex&#39;s Blogfolio">
 		
 		
@@ -297,6 +297,193 @@ header {
     padding-top: 10px;
     width:50%;
     display: table-cell;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+/* Message Box */
+.message-box {
+	--color-message-box: #ffc;
+
+	display: block;
+	background-color: var(--color-message-box);
+	color: var(--color-gray-90);
+	padding: .4em 0.625em; /* 16px 10px /16 */
+    border-radius: 25px;
+}
+.message-box ol {
+	margin-top: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+	.message-box {
+		--color-message-box: #634d38;
+	}
 }</style>
 		
 	</head>
@@ -309,7 +496,7 @@ header {
 				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
 				<ul class="nav">
 					<li class="nav-item"><a href="/drert.github.io/">Home</a></li>
-					<li class="nav-item"><a href="/drert.github.io/about/" aria-current="page">About</a></li>
+					<li class="nav-item"><a href="/drert.github.io/about/">About</a></li>
 					<li class="nav-item"><a href="/drert.github.io/tags/">Tags</a></li>
 					<li class="nav-item"><a href="/drert.github.io/blog/">Archive</a></li>
 				</ul>
@@ -320,18 +507,45 @@ header {
 			<heading-anchors>
 				
 
-<h1 id="about">About</h1>
-<p><em>WIP Page.</em></p>
-<h2 id="alex-sukennyk">Alex Sukennyk</h2>
-<h3 id="qualifications">Qualifications</h3>
-<p>Master of Science -- Computer Science -- Cleveland State University</p>
-<p>Bachelor of Arts -- Physics -- Cleveland State University</p>
-<p>Mathematics Minor</p>
-<p>Knowledgable in Machine Learning, Deep Learning -- Image Manipulation &amp; Neural Networks mostly.</p>
-<p>Experienced with Python (PyTorch, Tensorflow, etc.), C, SQL, and others.</p>
-<h3 id="contact-info">Contact Info:</h3>
-<p>email :: alexander.sukennyk@gmail.com</p>
 
+<h1 id="recall-tcp-improvement">Recall -- TCP Improvement</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2025-05-27">27 May 2025</time></li>
+	<li><a href="/drert.github.io/tags/recall/" class="post-tag">Recall</a>, </li>
+	<li><a href="/drert.github.io/tags/python/" class="post-tag">Python</a>, </li>
+	<li><a href="/drert.github.io/tags/tcp/" class="post-tag">TCP</a>, </li>
+	<li><a href="/drert.github.io/tags/project/" class="post-tag">Project</a></li>
+</ul>
+
+
+<div class="message-box">
+<p><em>Recall :: School Project</em> <br>
+<em>Computer Networks II</em> | <em>Fall 2024</em> | <em>Final Project</em> | <em>Dr. Ye Zhu</em> <br>
+<em>This page is a work in progress.</em></p>
+</div>
+<h2 id="tl-dr">TL;DR</h2>
+<ul>
+<li>Topic: Improving TCP Bandwidth Claiming</li>
+<li>Method: Testing several methods using basic simulation, discussing drawbacks.</li>
+<li>Project timeline: 1 week</li>
+<li>Results:
+<ul>
+<li>Methods exist which permit TCP to retain more bandwidth during traffic or natural drops in network availability.</li>
+<li>Not all methods are capable of TCP friendliness, causing compatibility issues.</li>
+<li>These methods may be worth employing, but legacy systems can suffer if too greedy of an approach is taken.</li>
+</ul>
+</li>
+</ul>
+<h2 id="links">Links</h2>
+<p><a href="/drert.github.io/TCP.pdf" target="_blank">Paper</a></p>
+<h2 id="background">Background</h2>
+<h2 id="method">Method</h2>
+<h2 id="results">Results</h2>
+<br>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/drert.github.io/blog/recall/Bird-DCGAN/RecolorGAN/">Recall -- Making a GAN for Recoloring Grayscale Images</a></li>
+</ul>
 
 			</heading-anchors>
 		</main>
@@ -340,7 +554,7 @@ header {
 			
 		</footer>
 
-		<!-- This page `/about/` was built on 2025-05-27T23:55:56.346Z -->
+		<!-- This page `/blog/recall/TCP-Study/TCP/` was built on 2025-05-27T23:55:56.346Z -->
 		<script type="module" src="/drert.github.io/dist/xbxy_EL6cU.js"></script>
 	</body>
 </html>

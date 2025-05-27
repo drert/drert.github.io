@@ -8,27 +8,37 @@
 	</url>
 	
 	<url>
-		<loc>https://example.com/drert.github.io/about/</loc>
+		<loc>https://example.com/drert.github.io/blog/recall/Bird-DCGAN/RecolorGAN/</loc>
 		<lastmod>2025-05-18</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/drert.github.io/about/</loc>
+		<lastmod>2025-05-27</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/drert.github.io/blog/</loc>
-		<lastmod>2025-05-18</lastmod>
+		<lastmod>2025-05-27</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/drert.github.io/blog/recall/TCP-Study/TCP/</loc>
+		<lastmod>2025-05-27</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/drert.github.io/</loc>
-		<lastmod>2025-05-18</lastmod>
+		<lastmod>2025-05-27</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/drert.github.io/sitemap.xml</loc>
-		<lastmod>2025-05-18</lastmod>
+		<lastmod>2025-05-27</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://example.com/drert.github.io/tags/</loc>
-		<lastmod>2025-05-18</lastmod>
+		<lastmod>2025-05-27</lastmod>
 	</url>
 </urlset>

@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Recall -- Making a GAN for Recoloring Grayscale Images</title>
+		<meta name="description" content="Birds are more fun when colored properly.">
+		<link rel="alternate" href="/drert.github.io/feed/feed.xml" type="application/atom+xml" title="Alex&#39;s Blogfolio">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+/* Defaults */
+:root {
+	--font-family: -apple-system, cambria, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #F5E8D8;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #FF4500;
+		--text-color-link-active: #DAA520;
+		--text-color-link-visited: #FF6F61;
+
+		--background-color: #1C1C1C;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+    zoom: 125%;
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+    /* position: fixed; */
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+
+
+#latcell, #pincol {
+    padding-top: 10px;
+    width:50%;
+    display: table-cell;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+/* Message Box */
+.message-box {
+	--color-message-box: #ffc;
+
+	display: block;
+	background-color: var(--color-message-box);
+	color: var(--color-gray-90);
+	padding: .4em 0.625em; /* 16px 10px /16 */
+    border-radius: 25px;
+}
+.message-box ol {
+	margin-top: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+	.message-box {
+		--color-message-box: #634d38;
+	}
+}</style>
+		
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/drert.github.io/" class="home-link">Alex&#39;s Blogfolio</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/drert.github.io/">Home</a></li>
+					<li class="nav-item"><a href="/drert.github.io/about/">About</a></li>
+					<li class="nav-item"><a href="/drert.github.io/tags/">Tags</a></li>
+					<li class="nav-item"><a href="/drert.github.io/blog/">Archive</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			<heading-anchors>
+				
+
+
+<h1 id="recall-making-a-gan-for-recoloring-grayscale-images">Recall -- Making a GAN for Recoloring Grayscale Images</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2025-05-18">18 May 2025</time></li>
+	<li><a href="/drert.github.io/tags/recall/" class="post-tag">Recall</a>, </li>
+	<li><a href="/drert.github.io/tags/gan/" class="post-tag">GAN</a>, </li>
+	<li><a href="/drert.github.io/tags/python/" class="post-tag">Python</a>, </li>
+	<li><a href="/drert.github.io/tags/project/" class="post-tag">Project</a></li>
+</ul>
+
+<picture><source type="image/avif" srcset="/drert.github.io/blog/recall/Bird-DCGAN/RecolorGAN/GeXs_ZwMNn-2100.avif 2100w"><source type="image/webp" srcset="/drert.github.io/blog/recall/Bird-DCGAN/RecolorGAN/GeXs_ZwMNn-2100.webp 2100w"><img loading="lazy" decoding="async" src="/drert.github.io/blog/recall/Bird-DCGAN/RecolorGAN/GeXs_ZwMNn-2100.jpeg" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image" width="2100" height="1050"></picture>
+<p> </p>
+
+<div class="message-box">
+<p><em>Recall :: School Project</em> <br>
+<em>Deep Learning</em> | <em>Spring 2024</em> | <em>Final Project</em> | <em>Dr. Hongkai Yu</em></p>
+</div>
+<h2 id="tl-dr">TL;DR</h2>
+<ul>
+<li>Topic: Recoloring grayscale images of birds.</li>
+<li>Method: Custom GAN on small available samples, thousands of iterations.</li>
+<li>Project timeline: 1 week</li>
+<li>Lines of code: 1000+</li>
+<li>Results:
+<ul>
+<li>Successful slight recolor of identified birds in ideal circumstances.</li>
+<li>Difficulties in GAN training due to small data size.</li>
+<li>Learned a lot, but did not provide substantial results at the time.</li>
+</ul>
+</li>
+</ul>
+<h2 id="links">Links</h2>
+<p><a href="/drert.github.io/ASUKENNYK_FINAL.pdf" target="_blank">Paper</a></p>
+<p><a href="https://github.com/drert/CIS694-DL/tree/main/Project" target="_blank">Source Code (GitHub)</a></p>
+<h2 id="preface">Preface</h2>
+<p>The class for which this project was made was a particularly challenging Deep Learning course. It really tested the limits of myself and my peers, and was very impactful in the way I looked at ML/DS/AI. In case he ever stumbles across this post, thank you, Dr. Yu! This class was amazing.</p>
+<p>The topic was very loose for this assignment, permitting us to choose any problem we were interested in and propose a deep-learning-based solution to it. I had a number of topics that I attempted to work on, but this one was a last-minute swap due to difficulties obtaining sufficient datasets for my other ideas.</p>
+<p>As such, this project took 1 week of serious crunch work.</p>
+<h2 id="background">Background</h2>
+<p>Many researchers, including Dr. Yu, are interested in automatic recoloring of old grayscale images. Most of this work is focused on old photos holding sentimental or historical value. In my case, most training datasets didn't have public availability.</p>
+<p>The ones that did had a request system, of which none replied to my messages requesting them for educational purposes. These databases consisted of gray images professionally remastered in color with the best efforts of historical artists. I understand why they might not just hand them out to anyone.</p>
+<p>The approach I used instead was simply using a database I had downloaded already, and graying the images myself. This could have been done with images of people, but I thought I'd be creative and chose animals in nature instead. After all, a lot of gray trail cam footage exists which may also be recolored!</p>
+<p>I had the CUB_200_2011 dataset available, which contains small sample sizes of classified birds. The small size creates a challenge, where I do not have a lot of information to feed into a learning model. I had hoped that this would emulate the possible restrictions of datasets of historical images.</p>
+<h2 id="method">Method</h2>
+<p>The library of choice for this project was PyTorch, starting with their DCGAN (Deep Convolutional Generative Adversarial Network) <a href="https://docs.pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html" target="_blank">tutorial</a>. Almost no part of their base code was recognizable by the time I had completed it, but I am linking it here for anyone who might want a starting point to try this.</p>
+<p>It is important to remember that the focus here is recoloring, not generation from scratch. For our inputs, we split each image into 2 slices: A lightness slice and an ab color slice. The lightness slice is our model's generator input, while the color slice is the ground truth. This feature is the reason why finding training data for this kind of project is necessarily easy, as any dataset with a sufficiently large number of images can be recolored.</p>
+<p>The generator and discriminator in were both created loosely following a method called Pix2Pix--another <a href="https://www.tensorflow.org/tutorials/generative/pix2pix" target="_blank">tutorial</a> here. Pix2Pix is a transforming model, suitable for our purposes given that we have our grayscale &quot;framework&quot; to work with. The discriminator is mostly kept standard, but to achieve any result, a feed-forward network was necessary in the generator. It's final architecture is shown below.</p>
+<picture><source type="image/avif" srcset="/drert.github.io/blog/recall/Bird-DCGAN/RecolorGAN/rOcnsCQBXo-1858.avif 1858w"><source type="image/webp" srcset="/drert.github.io/blog/recall/Bird-DCGAN/RecolorGAN/rOcnsCQBXo-1858.webp 1858w"><img loading="lazy" decoding="async" src="/drert.github.io/blog/recall/Bird-DCGAN/RecolorGAN/rOcnsCQBXo-1858.png" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image" width="1858" height="716"></picture>
+<p>The feed-forward network solves a lot of issues. To color the birds correctly, the model first needs to find them. One might argue that multiple models would be more effective for this purpose, and this is discussed in the final section below.</p>
+<p>The detection is achieved, I hope, during the encoding layers. I am still not certain as to how I would test this to confirm, but it was not even a thought at the time of making this model. This is one of the things I'm currently working on regarding my newer models, figuring out how to identify the effectiveness of each layer.</p>
+<p>Once encoding is complete, the decoding begins, appending old data from the previous encoding steps. This permits the model to introduce color while still respecting the original shape provided, rather than simply painting blotches and hoping. This effect can be confirmed by observing the lack of convergence when training without feed-forward. Using this kind of data appending configuration in neural networks has proven to be a great boon from others' research.</p>
+<h2 id="results">Results</h2>
+<picture><source type="image/avif" srcset="/drert.github.io/blog/recall/Bird-DCGAN/RecolorGAN/U0I9F45y1g-1147.avif 1147w"><source type="image/webp" srcset="/drert.github.io/blog/recall/Bird-DCGAN/RecolorGAN/U0I9F45y1g-1147.webp 1147w"><img loading="lazy" decoding="async" src="/drert.github.io/blog/recall/Bird-DCGAN/RecolorGAN/U0I9F45y1g-1147.png" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image" width="1147" height="593"></picture>
+<p>Alongside my method, the dataset was tested with a model from a paper named <em>Colorful Image Colorization</em> [EECV16]. These are used for comparison to see where failures occur, and where certain models may perform better.</p>
+<p>Due to the nature of the data (small sets with large variety), it was difficult to consistently obtain good results. The training required several hundred passes over shifted versions of the training images, and ultimately the colors in my model were usually just slightly off the mark.</p>
+<p>It can be seen in the image above that both my model and the EECV16 model perform acceptably when the input images are non-noisy. When the grayscale input is noisy, such as in the bottom examples with many leaves surrounding the bird, both models seem to struggle. This indicates that it is fundamentally challenging for these models to identify where the birds are given surroundings that are complex.</p>
+<p>In many ways, this model was successful. Provided that the object is located and identified correctly, the model is able to hallucinate color options that are not only nice looking, but correct! For a sprint-paced project with little planning, I am proud of how far I managed to get.</p>
+<h2 id="hindsight-afterword">Hindsight // Afterword</h2>
+<p>This project taught me a lot. Ultimately, the most important thing to take away is the importance of finding a good dataset early into planning! I still intend on one day going back to my human pose detection plan, but the difficulties in securing an effective dataset really make this particular assignment stressful.</p>
+<p>Rather than mull about what-could-have-beens, I'd like to make a habit here for future project posts by introducing 2 lists: What was learned (Lessons), and what could be worked on in the future or done better (Improvements).</p>
+<h3 id="lessons">Lessons:</h3>
+<ol>
+<li> It is incredibly important to *size* your bites.</li>
+<ul>
+<li>
+<p>This problem is hard to dissect, it really comes down to several problems in one: Identifying, Locating, and then Recoloring.</p>
+</li>
+<li>
+<p>I didn't have great examples of images with multiple birds, but I am certain that the model would fail given that the training dataset didn't incorporate this.</p>
+</li>
+</ul>
+<li> GAN balancing is exponentially more challenging as the problem becomes more complex. </li>
+<ul>
+<li>It's hard to say, but when seeing that the colors are still slightly off in good examples, I estimate that my discriminator was insufficient for the problem presented.</li>
+<li>It's important to &quot;upgrade&quot; the generator and discriminator together, and give each sufficient strength to control the other.</li>
+</ul>
+<li> Even when you understand the code, the model as a whole won't always act as you intend or plan. </li>
+<ul>
+<li>Building these models often feels like making a lego RC car as a kid. In principle, you have built the framework and it works -- but this doesn't mean that you understand what's happening in the controller, the motor, the circuitry.</li>
+<li>In this way, it seems clear that the knowns, such as data pre-processing, are very important to have an iron grip on. By poorly defining my problem to begin with, I crippled my model's chances at success.</li>
+</ul>
+</ol>
+<h3 id="improvements">Improvements:</h3>
+
+<ol>
+<li> There is, most likely, a multi-model or joint model solution here that I did not consider at the time. </li>
+<ul>
+<li>Rather than hoping that a generator would be able to do all of the problems, I'd like to make a multimodel approach that uses different techniques to ID, label, and trace the objects in the image.</li>
+<li>Consider a model trained to identify objects of interest, which feeds its output into the generator alongside the grayscale image. This could improve the process innately by unloading responsibilities from the generator.</li>
+</ul>
+<li> I'd love to have taken the time to do deep analysis, visualizing the trained model layers to see what's going on under the hood. </li> 
+<ul>
+<li>Is the model casting a wide net to identify clusters where the bird may be?</li>
+<li>Is this done in the encoding stage as I had hoped?</li>
+<li>Is the discriminator able to identify where the bird is just like the generator?</li>
+<li>Many other questions persist.</li>
+</ul>
+</ol>
+<p>Thanks for reading!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/drert.github.io/blog/the-list/firstpost/">Post 0 // The Bulletin</a></li><li class="links-nextprev-next">Next →<br><a href="/drert.github.io/blog/recall/TCP-Study/TCP/">Recall -- TCP Improvement</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			
+		</footer>
+
+		<!-- This page `/blog/recall/Bird-DCGAN/RecolorGAN/` was built on 2025-05-27T23:55:56.346Z -->
+		<script type="module" src="/drert.github.io/dist/xbxy_EL6cU.js"></script>
+	</body>
+</html>
