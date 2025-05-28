@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Recall -- Making a GAN for Recoloring Grayscale Images</title>
 		<meta name="description" content="Birds are more fun when colored properly.">
-		<link rel="alternate" href="/alex.sukennyk.com/feed/feed.xml" type="application/atom+xml" title="Alex&#39;s Blogfolio">
+		<link rel="alternate" href="https://alex.sukennyk.com/https:/alex.sukennyk.com/feed/feed.xml" type="application/atom+xml" title="Alex&#39;s Blogfolio">
 		
 		
 		
@@ -488,17 +488,17 @@ pre[class*="language-diff-"] {
 		
 	</head>
 	<body>
-		<a href="#skip" class="visually-hidden">Skip to main content</a>
+		<a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/blog/recall/Bird-DCGAN/RecolorGAN/#skip" class="visually-hidden">Skip to main content</a>
 
 		<header>
-			<a href="/alex.sukennyk.com/" class="home-link">Alex&#39;s Blogfolio</a>
+			<a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/" class="home-link">Alex&#39;s Blogfolio</a>
 			<nav>
 				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
 				<ul class="nav">
-					<li class="nav-item"><a href="/alex.sukennyk.com/">Home</a></li>
-					<li class="nav-item"><a href="/alex.sukennyk.com/about/">About</a></li>
-					<li class="nav-item"><a href="/alex.sukennyk.com/tags/">Tags</a></li>
-					<li class="nav-item"><a href="/alex.sukennyk.com/blog/">Archive</a></li>
+					<li class="nav-item"><a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/">Home</a></li>
+					<li class="nav-item"><a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/about/">About</a></li>
+					<li class="nav-item"><a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/tags/">Tags</a></li>
+					<li class="nav-item"><a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/blog/">Archive</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -512,15 +512,15 @@ pre[class*="language-diff-"] {
 
 <ul class="post-metadata">
 	<li><time datetime="2025-05-18">18 May 2025</time></li>
-	<li><a href="/alex.sukennyk.com/tags/recall/" class="post-tag">Recall</a>, </li>
-	<li><a href="/alex.sukennyk.com/tags/gan/" class="post-tag">GAN</a>, </li>
-	<li><a href="/alex.sukennyk.com/tags/python/" class="post-tag">Python</a>, </li>
-	<li><a href="/alex.sukennyk.com/tags/project/" class="post-tag">Project</a></li>
+	<li><a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/tags/recall/" class="post-tag">Recall</a>, </li>
+	<li><a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/tags/gan/" class="post-tag">GAN</a>, </li>
+	<li><a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/tags/python/" class="post-tag">Python</a>, </li>
+	<li><a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/tags/project/" class="post-tag">Project</a></li>
 </ul>
 
 <!-- <img src="./Birds1.jpg" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image"> -->
 <p> </p>
-<p><picture><source type="image/png" srcset="/alex.sukennyk.com/blog/recall/Bird-DCGAN/RecolorGAN/GeXs_ZwMNn-2100.png 2100w"><img src="/alex.sukennyk.com/blog/recall/Bird-DCGAN/RecolorGAN/GeXs_ZwMNn-2100.jpeg" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image" width="2100" height="1050"></picture></p>
+<p><picture><source type="image/png" srcset="https://alex.sukennyk.com/https:/alex.sukennyk.com/blog/recall/Bird-DCGAN/RecolorGAN/GeXs_ZwMNn-2100.png 2100w"><img src="https://alex.sukennyk.com/https:/alex.sukennyk.com/blog/recall/Bird-DCGAN/RecolorGAN/GeXs_ZwMNn-2100.jpeg" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image" width="2100" height="1050"></picture></p>
 
 <div class="message-box">
 <p><em>Recall :: School Project</em> <br>
@@ -541,7 +541,7 @@ pre[class*="language-diff-"] {
 </li>
 </ul>
 <h2 id="links">Links</h2>
-<p><a href="/alex.sukennyk.com/ASUKENNYK_FINAL.pdf" target="_blank">Paper</a></p>
+<p><a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/ASUKENNYK_FINAL.pdf" target="_blank">Paper</a></p>
 <p><a href="https://github.com/drert/CIS694-DL/tree/main/Project" target="_blank">Source Code (GitHub)</a></p>
 <h2 id="preface">Preface</h2>
 <p>The class for which this project was made was a particularly challenging Deep Learning course. It really tested the limits of myself and my peers, and was very impactful in the way I looked at ML/DS/AI. In case he ever stumbles across this post, thank you, Dr. Yu! This class was amazing.</p>
@@ -556,13 +556,13 @@ pre[class*="language-diff-"] {
 <p>The library of choice for this project was PyTorch, starting with their DCGAN (Deep Convolutional Generative Adversarial Network) <a href="https://docs.pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html" target="_blank">tutorial</a>. Almost no part of their base code was recognizable by the time I had completed it, but I am linking it here for anyone who might want a starting point to try this.</p>
 <p>It is important to remember that the focus here is recoloring, not generation from scratch. For our inputs, we split each image into 2 slices: A lightness slice and an ab color slice. The lightness slice is our model's generator input, while the color slice is the ground truth. This feature is the reason why finding training data for this kind of project is necessarily easy, as any dataset with a sufficiently large number of images can be recolored.</p>
 <p>The generator and discriminator in were both created loosely following a method called Pix2Pix--another <a href="https://www.tensorflow.org/tutorials/generative/pix2pix" target="_blank">tutorial</a> here. Pix2Pix is a transforming model, suitable for our purposes given that we have our grayscale &quot;framework&quot; to work with. The discriminator is mostly kept standard, but to achieve any result, a feed-forward network was necessary in the generator. It's final architecture is shown below.</p>
-<p><img src="/alex.sukennyk.com/blog/recall/Bird-DCGAN/RecolorGAN/rOcnsCQBXo-1858.png" alt="Generator Architecture" width="1858" height="716"></p>
+<p><img src="https://alex.sukennyk.com/https:/alex.sukennyk.com/blog/recall/Bird-DCGAN/RecolorGAN/rOcnsCQBXo-1858.png" alt="Generator Architecture" width="1858" height="716"></p>
 <!-- <img src="./GenArch.PNG" alt="Generator Architecture"> -->
 <p>The feed-forward network solves a lot of issues. To color the birds correctly, the model first needs to find them. One might argue that multiple models would be more effective for this purpose, and this is discussed in the final section below.</p>
 <p>The detection is achieved, I hope, during the encoding layers. I am still not certain as to how I would test this to confirm, but it was not even a thought at the time of making this model. This is one of the things I'm currently working on regarding my newer models, figuring out how to identify the effectiveness of each layer.</p>
 <p>Once encoding is complete, the decoding begins, appending old data from the previous encoding steps. This permits the model to introduce color while still respecting the original shape provided, rather than simply painting blotches and hoping. This effect can be confirmed by observing the lack of convergence when training without feed-forward. Using this kind of data appending configuration in neural networks has proven to be a great boon from others' research.</p>
 <h2 id="results">Results</h2>
-<p><img src="/alex.sukennyk.com/blog/recall/Bird-DCGAN/RecolorGAN/U0I9F45y1g-1147.png" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image" width="1147" height="593"></p>
+<p><img src="https://alex.sukennyk.com/https:/alex.sukennyk.com/blog/recall/Bird-DCGAN/RecolorGAN/U0I9F45y1g-1147.png" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image" width="1147" height="593"></p>
 <!-- <img src="./COMP2.PNG" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image"> -->
 <p>Alongside my method, the dataset was tested with a model from a paper named <em>Colorful Image Colorization</em> [EECV16]. These are used for comparison to see where failures occur, and where certain models may perform better.</p>
 <p>Due to the nature of the data (small sets with large variety), it was difficult to consistently obtain good results. The training required several hundred passes over shifted versions of the training images, and ultimately the colors in my model were usually just slightly off the mark.</p>
@@ -611,7 +611,7 @@ pre[class*="language-diff-"] {
 </ol>
 <p>Thanks for reading!</p>
 
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/alex.sukennyk.com/blog/the-list/firstpost/">Post 0 // The Bulletin</a></li><li class="links-nextprev-next">Next →<br><a href="/alex.sukennyk.com/blog/recall/TCP-Study/TCP/">Recall -- TCP Improvement</a></li>
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/blog/the-list/firstpost/">Post 0 // The Bulletin</a></li><li class="links-nextprev-next">Next →<br><a href="https://alex.sukennyk.com/https:/alex.sukennyk.com/blog/recall/TCP-Study/TCP/">Recall -- TCP Improvement</a></li>
 </ul>
 
 			</heading-anchors>
@@ -621,7 +621,7 @@ pre[class*="language-diff-"] {
 			
 		</footer>
 
-		<!-- This page `/blog/recall/Bird-DCGAN/RecolorGAN/` was built on 2025-05-28T05:48:50.559Z -->
-		<script type="module" src="/alex.sukennyk.com/dist/xbxy_EL6cU.js"></script>
+		<!-- This page `/blog/recall/Bird-DCGAN/RecolorGAN/` was built on 2025-05-28T07:02:36.697Z -->
+		<script type="module" src="https://alex.sukennyk.com/https:/alex.sukennyk.com/dist/xbxy_EL6cU.js"></script>
 	</body>
 </html>
