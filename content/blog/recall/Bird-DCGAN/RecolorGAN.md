@@ -4,8 +4,10 @@ description: Birds are more fun when colored properly.
 date: 2025-05-18
 tags: [Recall, GAN, Python, Project]
 ---
-<img src="./Birds1.jpg" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image">
+<!-- <img src="./Birds1.jpg" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image"> -->
 <p> </p>
+
+![8 images comparing 2 methods in attempt to recolor birds from grayscale image](Birds1.jpg)
 
 <style>{% include "css/message-box.css" %}</style>
 <div class="message-box">
@@ -57,7 +59,9 @@ It is important to remember that the focus here is recoloring, not generation fr
 
 The generator and discriminator in were both created loosely following a method called Pix2Pix--another <a href="https://www.tensorflow.org/tutorials/generative/pix2pix" target="_blank">tutorial</a> here. Pix2Pix is a transforming model, suitable for our purposes given that we have our grayscale "framework" to work with. The discriminator is mostly kept standard, but to achieve any result, a feed-forward network was necessary in the generator. It's final architecture is shown below.
 
-<img src="./GenArch.PNG" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image">
+
+![Generator Architecture](GenArch.PNG)
+<!-- <img src="./GenArch.PNG" alt="Generator Architecture"> -->
 
 The feed-forward network solves a lot of issues. To color the birds correctly, the model first needs to find them. One might argue that multiple models would be more effective for this purpose, and this is discussed in the final section below. 
 
@@ -67,7 +71,8 @@ Once encoding is complete, the decoding begins, appending old data from the prev
 
 
 ## Results
-<img src="./COMP2.PNG" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image">
+![8 images comparing 2 methods in attempt to recolor birds from grayscale image](COMP2.PNG)
+<!-- <img src="./COMP2.PNG" alt="8 images comparing 2 methods in attempt to recolor birds from grayscale image"> -->
 
 Alongside my method, the dataset was tested with a model from a paper named *Colorful Image Colorization* [EECV16]. These are used for comparison to see where failures occur, and where certain models may perform better. 
 
