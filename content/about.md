@@ -7,9 +7,10 @@ const eleventyNavigation = {
 ---
 # About
 
-_WIP Page._
+_This page is a work in progress._
 
 ## Alex Sukennyk
+<a href="/Resume_ASukennyk.pdf">Resume Link</a>
 
 ### Qualifications
 Master of Science -- Computer Science -- Cleveland State University

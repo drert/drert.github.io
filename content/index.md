@@ -19,7 +19,7 @@ If you are a recruiter, a copy of my resume is available <a href="/Resume_ASuken
 
 * <a href="\blog\recall\Bird-DCGAN\RecolorGAN" >GAN Grayscale Image Recoloring</a>
     * Recoloring grayscale bird images using small data sizes.
-* <a href="\blog\recall\TCP-Study\TCP" target="_blank">TCP Improvement</a>
+* <a href="\blog\recall\TCP-Study\TCP">TCP Improvement</a>
     * Experiments and Survey of improving TCP bandwidth grabbing with various methods.
 <!-- * <a href="">Pixel-mod Multitool</a>
     * Ongoing project creating interesting image manipulation tools. -->
